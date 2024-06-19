@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useLoaderData,
+} from "react-router-dom";
+import "./index.css";
+import DishList from "./components/dishes/DishList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let router = createBrowserRouter([
+  {
+    path: "/",
+    loader: () => ({ message: "Hello Data Router!" }),
+    Component() {
+      let data = useLoaderData() as { message: string };
+      return <DishList />;
+    },
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
 }
-
-export default App;
