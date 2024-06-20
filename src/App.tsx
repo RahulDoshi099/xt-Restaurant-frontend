@@ -1,22 +1,36 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useLoaderData,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom";
 import "./index.css";
-import DishList from "./components/dishes/DishList";
+import NoMatch from "./presentation/pages/NoMatch";
+import ContactPage from "./presentation/pages/ContactPage";
+import HomePage from "./presentation/pages/Home/HomePage";
+import Menu from "./presentation/pages/Menu/Menu";
+import Header from "./presentation/components/Header/Header";
+import Footer from "./presentation/components/Footer/Footer";
+import "./App.css";
 
-let router = createBrowserRouter([
-  {
-    path: "/",
-    loader: () => ({ message: "Hello Data Router!" }),
-    Component() {
-      let data = useLoaderData() as { message: string };
-      return <DishList />;
-    },
-  },
-]);
+function Layout() {
+  return (
+    <div className="layout">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
 
-export default function App() {
-  return <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
+export default function HomeApp() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dish } from '../../data/models/Dish';
+import { Dish } from '../../../data/models/Dish';
 
 interface OrderPopupProps {
   dishes: Dish[];

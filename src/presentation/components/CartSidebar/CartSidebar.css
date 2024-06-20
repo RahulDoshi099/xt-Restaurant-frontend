@@ -1,0 +1,45 @@
+/* src/components/CartSidebar/CartSidebar.css */
+.cart-sidebar {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+  }
+  
+  .list-box button {
+    margin-left: 50px;
+  }
+  .cart-sidebar h2 {
+    margin-bottom: 10px;
+  }
+  
+  .cart-sidebar ul {
+    margin-top: "10px" !important;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .cart-sidebar div {
+    margin-bottom: 10px !important;
+    gap: "50px";
+  }
+  
+  .cart-sidebar div span {
+    margin-right: 10px;
+  }
+  
+  .cart-sidebar button {
+    margin-left: 50px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .cart-sidebar button:hover {
+    background-color: #0056b3;
+  }
