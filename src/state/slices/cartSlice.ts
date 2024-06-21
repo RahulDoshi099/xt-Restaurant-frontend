@@ -1,5 +1,5 @@
-// src/state/slices/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 interface CartItem {
   id: number;
@@ -10,10 +10,12 @@ interface CartItem {
 
 interface CartState {
   items: CartItem[];
+  isCartOpen: boolean;
 }
 
 const initialState: CartState = {
   items: [],
+  isCartOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -43,8 +45,25 @@ const cartSlice = createSlice({
         item.quantity -= 1;
       }
     },
+    openCart: (state) => {
+      state.isCartOpen = true;
+    },
+    closeCart: (state) => {
+      state.isCartOpen = false;
+    },
+    clearCart: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addItem, removeItem, incrementQuantity, decrementQuantity } = cartSlice.actions;
+export const { addItem, removeItem, incrementQuantity, decrementQuantity, openCart, closeCart, clearCart } = cartSlice.actions;
+
+export const selectCartItems = (state: RootState) => state.cart.items;
+export const selectTotalItems = (state: RootState) =>
+  state.cart.items.reduce((total, item) => total + item.quantity, 0);
+export const selectTotalPrice = (state: RootState) =>
+  state.cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
+export const selectIsCartOpen = (state: RootState) => state.cart.isCartOpen;
+
 export default cartSlice.reducer;

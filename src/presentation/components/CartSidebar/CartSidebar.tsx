@@ -1,18 +1,43 @@
-// src/components/CartSidebar/CartSidebar.tsx
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./CartSidebar.css";
+import { RootState } from "../../../state/store";
+import {
+  removeItem,
+  incrementQuantity,
+  decrementQuantity,
+  selectTotalPrice,
+  closeCart,
+  clearCart,
+} from "../../../state/slices/cartSlice";
 
-interface CartSidebarProps {
-  cart: any[]; // Adjust type as per your cart item structure
-  removeFromCart: (id: number) => void;
-  setCartVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface CartSidebarProps {}
 
-const CartSidebar: React.FC<CartSidebarProps> = ({
-  cart,
-  removeFromCart,
-  setCartVisible,
-}) => {
+const CartSidebar: React.FC<CartSidebarProps> = () => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.items);
+  const totalPrice = useSelector(selectTotalPrice);
+
+  const handleRemove = (id: number) => {
+    dispatch(removeItem(id));
+  };
+
+  const handleIncrement = (id: number) => {
+    dispatch(incrementQuantity(id));
+  };
+
+  const handleDecrement = (id: number) => {
+    dispatch(decrementQuantity(id));
+  };
+
+  const handleCloseCart = () => {
+    dispatch(closeCart());
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
   return (
     <div className="cart-sidebar">
       <h2>Cart</h2>
@@ -20,17 +45,34 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
         <p>Your cart is empty.</p>
       ) : (
         <ul>
-          {cart.map((item,index) => (
-            <div className="list-box" key={index}>
-              <li key={item.id}>
-                <span>{item.name}</span>
-                <button onClick={() => removeFromCart(item.id)}>Remove</button>
+          {cart.map((item) => (
+            <div className="list-box" key={item.id}>
+              <li>
+                <div>
+                  <span className="namePrice">
+                    {item.name} - ${item.price}{" "}
+                  </span>
+                </div>
+                <div>
+                  <button onClick={() => handleIncrement(item.id)}>+</button>
+                  <span className="quantity"> {item.quantity}</span>
+                  <button onClick={() => handleDecrement(item.id)}>-</button>
+                  <button onClick={() => handleRemove(item.id)}>Remove</button>
+                </div>
               </li>
             </div>
           ))}
         </ul>
       )}
-      <button onClick={() => setCartVisible(false)}>Close</button>
+      <div className="cart-total">Total: ${totalPrice.toFixed(2)}</div>
+      <div className="btn-box">
+        {cart.length !== 0 && (
+          <button className="clearAll" onClick={handleClearCart}>
+            Clear All
+          </button>
+        )}
+        <button onClick={handleCloseCart}>Close</button>
+      </div>
     </div>
   );
 };
