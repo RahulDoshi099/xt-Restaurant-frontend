@@ -5,7 +5,6 @@ import DishList from "../../components/DishList/DishList";
 import "./HomePage.css";
 
 const HomePage: React.FC = () => {
-
   return (
     <div className="home-page">
       <main>

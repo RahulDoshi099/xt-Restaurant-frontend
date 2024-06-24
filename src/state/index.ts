@@ -1,11 +1,11 @@
 // src/state/index.ts
 import { combineReducers } from 'redux';
-import counterReducer from "./slices/counterSlice"
 import cartReducer from './slices/cartSlice';
+import { dishApi } from '../UI/pages/Menu/services/Menu';
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   cart: cartReducer,
+  [dishApi.reducerPath]: dishApi.reducer,
   // Add other reducers here
 });
 
